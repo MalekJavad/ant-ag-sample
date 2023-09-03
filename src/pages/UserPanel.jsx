@@ -27,14 +27,16 @@ const UserPanel = () => {
 
     return (    
         <Row justify="space-around" align="middle">
-            <Col span={12} flex="1 1 200px">
-                <Space
-                // direction="vertical"
-                className="container"
-                size={[0, 50]}
-                >
-                    <Menu onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
-                </Space>
+            <Col span={8}>
+            <div className="space-align-container">
+                <div className="space-align-block">
+                    <Space
+                    className="container"
+                    >
+                        <Menu className="menu" onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
+                    </Space>
+                </div>
+            </div>
             </Col>
         </Row>
     );
