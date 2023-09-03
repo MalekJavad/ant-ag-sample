@@ -5,6 +5,8 @@ import "./UserPanel.css";
 import { UserAddOutlined, DatabaseOutlined } from '@ant-design/icons';
 import { Col, Row, Menu, Space } from 'antd';
 
+import AddForm from "../components/AddForm/AddForm";
+
 const items = [
     {
       label: 'افزودن کاربر',
@@ -34,6 +36,13 @@ const UserPanel = () => {
                     className="container"
                     >
                         <Menu className="menu" onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
+                        <div className="panel">
+                            {
+                                current==='add' ? <AddForm />
+                                :
+                                null // <UserGrid />
+                            }
+                        </div>
                     </Space>
                 </div>
             </div>

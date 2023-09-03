@@ -1,5 +1,8 @@
 .container { 
     padding: 1rem 3rem 15rem 2rem;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
 }
 
 .space-align-container {
@@ -9,7 +12,7 @@
 }
 .space-align-block {
     flex: none;
-    margin: 8px 4px;
+    margin: 3rem 4px;
     padding: 4px;
     border: 1px solid #40a9ff;
 }
