@@ -20,3 +20,7 @@
 .menu {
     width: 20rem;
 }
+
+.panel {
+    text-align: end;
+}

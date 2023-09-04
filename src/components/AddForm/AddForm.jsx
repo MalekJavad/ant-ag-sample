@@ -78,7 +78,13 @@ const AddForm = () => {
                 </Form.Item>
 
                 <Form.Item
-                    lable="جنسیت"
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                    }}
+                    label="جنسیت"
                     name="gender"
                     rules={[
                         {
@@ -87,9 +93,9 @@ const AddForm = () => {
                         }
                     ]}
                 >
-                    <Radio.Group buttonStyle="solid">
-                        <Radio.Button value="male"> مرد </Radio.Button>
-                        <Radio.Button value="female"> زن </Radio.Button>
+                    <Radio.Group buttonStyle="solid" style={{flexDirection: 'row-reverse'}}>
+                        <Radio.Button value="male" style={{width: '50%'}}> مرد </Radio.Button>
+                        <Radio.Button value="female" style={{width: '50%'}}> زن </Radio.Button>
                     </Radio.Group>
                 </Form.Item>
 
@@ -99,8 +105,8 @@ const AddForm = () => {
                         span: 16,
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
-                        Submit
+                    <Button style={{width: '100%'}} type="primary" htmlType="submit">
+                        افزودن
                     </Button>
                 </Form.Item>
 
