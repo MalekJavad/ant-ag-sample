@@ -16,11 +16,15 @@
     flex: none;
     margin: 3rem 4px;
     padding: 4px;
-    border: 1px solid #40a9ff;
+    /* border: 1px solid #40a9ff; */
+    border: none;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.795);
 }
 
 .menu {
     width: 20rem;
+    border-radius: 1rem;
 }
 
 .panel {

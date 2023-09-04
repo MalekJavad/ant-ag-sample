@@ -36,7 +36,15 @@ const UserGrid = () => {
     }, [userContext.users])
 
     return (
-        <div className='ag-theme-alpine' style={{height: '30rem', width: '76rem', textAlign: 'left', fontFamily: 'Vazir-FD',}}>
+        <div className="ag-theme-alpine"
+        style={
+            {
+                height: '30rem', 
+                width: '76rem', 
+                textAlign: 'left', 
+                fontFamily: 'Vazir-FD',
+            }}
+        >
             <AgGridReact
                 enableRtl={true}
                 rowData={rowData}
