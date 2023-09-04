@@ -1,11 +1,16 @@
-import React from "react";
+import React, {useContext } from "react";
 import { Button, Form, Input, Radio, InputNumber } from 'antd';
 
 import "./AddForm.css";
 
+import { UserContext } from "../../context/user-context/user-context.jsx";
+
 const AddForm = () => {
+    const userContext = useContext(UserContext);
+
     const onFinish = (values) => {
         console.log('Success:', values);
+        userContext.addUser(values);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -109,8 +114,8 @@ const AddForm = () => {
                     ]}
                 >
                     <Radio.Group buttonStyle="solid" style={{flexDirection: 'row-reverse'}}>
-                        <Radio.Button value="male" style={{width: '4rem'}}> مرد </Radio.Button>
-                        <Radio.Button value="female" style={{width: '4rem'}}> زن </Radio.Button>
+                        <Radio.Button value="مرد" style={{width: '4rem'}}> مرد </Radio.Button>
+                        <Radio.Button value="زن" style={{width: '4rem'}}> زن </Radio.Button>
                     </Radio.Group>
                 </Form.Item>
 
