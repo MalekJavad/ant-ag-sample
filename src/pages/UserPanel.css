@@ -1,5 +1,5 @@
 .container { 
-    padding: 1rem 3rem 15rem 2rem;
+    padding: 1rem 3rem 8rem 2rem;
     display: flex;
     align-items: stretch;
     flex-direction: column;
@@ -8,8 +8,10 @@
 .space-align-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    justify-content: start;
+    flex-direction: row-reverse;
 }
+
 .space-align-block {
     flex: none;
     margin: 3rem 4px;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input, Radio, InputNumber } from 'antd';
 
 import "./AddForm.css";
 
@@ -78,11 +78,26 @@ const AddForm = () => {
                 </Form.Item>
 
                 <Form.Item
+                    style={{display: 'flex', justifyContent: 'start', marginRight: '19%'}} 
+                    label="سن"
+                    name="age"
+                    rules={[
+                        {
+                        required: true,
+                        message: 'لطفا سن خود را وارد کنید',
+                        },
+                    ]}
+                >
+                    <InputNumber min={1} max={90} />
+                </Form.Item>
+
+                <Form.Item
                     style={{
                         display: 'flex',
                         flexDirection: 'row-reverse',
-                        justifyContent: 'center',
+                        justifyContent: 'start',
                         textAlign: 'center',
+                        marginRight: '13%',
                     }}
                     label="جنسیت"
                     name="gender"
@@ -94,8 +109,8 @@ const AddForm = () => {
                     ]}
                 >
                     <Radio.Group buttonStyle="solid" style={{flexDirection: 'row-reverse'}}>
-                        <Radio.Button value="male" style={{width: '50%'}}> مرد </Radio.Button>
-                        <Radio.Button value="female" style={{width: '50%'}}> زن </Radio.Button>
+                        <Radio.Button value="male" style={{width: '4rem'}}> مرد </Radio.Button>
+                        <Radio.Button value="female" style={{width: '4rem'}}> زن </Radio.Button>
                     </Radio.Group>
                 </Form.Item>
 

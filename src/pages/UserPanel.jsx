@@ -6,6 +6,7 @@ import { UserAddOutlined, DatabaseOutlined } from '@ant-design/icons';
 import { Col, Row, Menu, Space } from 'antd';
 
 import AddForm from "../components/AddForm/AddForm";
+import UserGrid from "../components/UserGrid/UserGrid";
 
 const items = [
     {
@@ -28,7 +29,9 @@ const UserPanel = () => {
     };
 
     return (    
-        <Row justify="space-around" align="middle">
+        <Row justify="space-around" align="middle"
+            style={{display: 'flex', justifyContent: 'space-between', marginRight: '20rem'}}
+        >
             <Col span={8}>
             <div className="space-align-container">
                 <div className="space-align-block">
@@ -40,7 +43,7 @@ const UserPanel = () => {
                             {
                                 current==='add' ? <AddForm />
                                 :
-                                null // <UserGrid />
+                                <UserGrid />
                             }
                         </div>
                     </Space>
