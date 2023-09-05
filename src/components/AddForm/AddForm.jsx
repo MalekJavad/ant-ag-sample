@@ -14,7 +14,7 @@ const AddForm = () => {
     const onFinish = (values) => {
         console.log('Success:', values);
 
-        messageApi.open({key, type: 'loading', content: 'در حال ثبت کاربر...'});
+        messageApi.open({key, type: 'loading', content: 'در حال ثبت کاربر...', duration: 1000});
 
         axios.post('https://usergrid-71604-default-rtdb.firebaseio.com/users.json', values)
         .then((response) => {
@@ -23,7 +23,7 @@ const AddForm = () => {
         })
         .catch((err) => {
             console.log(err);
-            messageApi.open({key, type: 'error', content: 'حطا رخ داد', duration: 2});
+            messageApi.open({key, type: 'error', content: 'خطا رخ داد', duration: 2});
         });
         
         // userContext.addUser(values);

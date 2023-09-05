@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { message } from 'antd';
 
 import axios from 'axios';
 
@@ -12,6 +13,8 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 const UserGrid = () => {
     // const userContext = useContext(UserContext);
+    const [messageApi, contextHolder] = message.useMessage();
+    const key = "addUser";
 
     const [columnDef] = useState([
         {field: 'name', sortable: true, headerName: 'نام'},
@@ -33,6 +36,8 @@ const UserGrid = () => {
       }, []);
 
     useEffect(()=>{
+        messageApi.open({key, type: 'loading', content: 'در حال بارگزاری...'});
+
         axios.get('https://usergrid-71604-default-rtdb.firebaseio.com/users.json')
         .then((response) => {
             const dataObject = response.data;
@@ -42,10 +47,11 @@ const UserGrid = () => {
                     dataList.push(dataObject[key]);
                 }
             }
+            messageApi.open({key, type: 'success', content: 'بارگزاری شد', duration: 2});
             setRowData(dataList);
         })
         .catch((err) => {
-            console.log(err);
+            messageApi.open({key, type: 'error', content: 'خطایی در بارگزاری اطلاعات رخ داد', duration: 2});
         });
 
         // setRowData(userContext.users);
@@ -61,6 +67,7 @@ const UserGrid = () => {
                 fontFamily: 'Vazir-FD',
             }}
         >
+            {contextHolder}
             <AgGridReact
                 enableRtl={true}
                 rowData={rowData}
