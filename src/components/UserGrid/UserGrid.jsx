@@ -1,15 +1,17 @@
-import React, { useState, useContext, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+
+import axios from 'axios';
 
 import "./UserGrid.css";
 
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import { UserContext } from '../../context/user-context/user-context';
+// import { UserContext } from '../../context/user-context/user-context';
 
 const UserGrid = () => {
-    const userContext = useContext(UserContext);
+    // const userContext = useContext(UserContext);
 
     const [columnDef] = useState([
         {field: 'name', sortable: true, headerName: 'نام'},
@@ -31,9 +33,23 @@ const UserGrid = () => {
       }, []);
 
     useEffect(()=>{
-        setRowData(userContext.users);
-        console.log('ue in Grid', userContext.users)
-    }, [userContext.users])
+        axios.get('https://usergrid-71604-default-rtdb.firebaseio.com/users.json')
+        .then((response) => {
+            const dataObject = response.data;
+            const dataList = [];
+            for (const key in dataObject) {
+                if (dataObject.hasOwnProperty(key)) {
+                    dataList.push(dataObject[key]);
+                }
+            }
+            setRowData(dataList);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        // setRowData(userContext.users);
+    }, [])
 
     return (
         <div className="ag-theme-alpine"

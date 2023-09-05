@@ -1,13 +1,13 @@
-import React, {useContext } from "react";
+import React from "react";
 import { Button, Form, Input, Radio, InputNumber, message } from 'antd';
 import axios from "axios";
 
 import "./AddForm.css";
 
-import { UserContext } from "../../context/user-context/user-context.jsx";
+// import { UserContext } from "../../context/user-context/user-context.jsx";
 
 const AddForm = () => {
-    const userContext = useContext(UserContext);
+    // const userContext = useContext(UserContext);
     const [messageApi, contextHolder] = message.useMessage();
     const key = "addUser";
 
@@ -26,7 +26,7 @@ const AddForm = () => {
             messageApi.open({key, type: 'error', content: 'حطا رخ داد', duration: 2});
         });
         
-        userContext.addUser(values);
+        // userContext.addUser(values);
     };
 
     const onFinishFailed = (errorInfo) => {
