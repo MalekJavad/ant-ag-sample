@@ -1,5 +1,5 @@
 import React, {useContext } from "react";
-import { Button, Form, Input, Radio, InputNumber } from 'antd';
+import { Button, Form, Input, Radio, InputNumber, message } from 'antd';
 
 import "./AddForm.css";
 
@@ -7,9 +7,12 @@ import { UserContext } from "../../context/user-context/user-context.jsx";
 
 const AddForm = () => {
     const userContext = useContext(UserContext);
+    const [messageApi, contextHolder] = message.useMessage();
+
 
     const onFinish = (values) => {
         console.log('Success:', values);
+        messageApi.open({type: 'success', content: 'افزودن کاربر با موفقیت انجام شد'});
         userContext.addUser(values);
     };
 
@@ -19,6 +22,7 @@ const AddForm = () => {
 
     return (
         <div className="form">
+            {contextHolder}
             <Form    
                 name="basic"
                 labelCol={{ span: 8 }}
