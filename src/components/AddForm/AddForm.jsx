@@ -1,5 +1,6 @@
 import React, {useContext } from "react";
 import { Button, Form, Input, Radio, InputNumber, message } from 'antd';
+import axios from "axios";
 
 import "./AddForm.css";
 
@@ -8,11 +9,23 @@ import { UserContext } from "../../context/user-context/user-context.jsx";
 const AddForm = () => {
     const userContext = useContext(UserContext);
     const [messageApi, contextHolder] = message.useMessage();
-
+    const key = "addUser";
 
     const onFinish = (values) => {
         console.log('Success:', values);
-        messageApi.open({type: 'success', content: 'افزودن کاربر با موفقیت انجام شد'});
+
+        messageApi.open({key, type: 'loading', content: 'در حال ثبت کاربر...'});
+
+        axios.post('https://usergrid-71604-default-rtdb.firebaseio.com/users.json', values)
+        .then((response) => {
+            console.log(response.data);
+            messageApi.open({key, type: 'success', content: 'کاربر با موفقیت ثبت شد', duration: 2});
+        })
+        .catch((err) => {
+            console.log(err);
+            messageApi.open({key, type: 'error', content: 'حطا رخ داد', duration: 2});
+        });
+        
         userContext.addUser(values);
     };
 
