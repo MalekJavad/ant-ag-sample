@@ -9,21 +9,20 @@ import "./AddForm.css";
 const AddForm = () => {
     // const userContext = useContext(UserContext);
     const [messageApi, contextHolder] = message.useMessage();
-    const key = "addUser";
+    const key = "addUser";  
 
     const onFinish = (values) => {
-        console.log('Success:', values);
-
         messageApi.open({key, type: 'loading', content: 'در حال ثبت کاربر...', duration: 1000});
-
-        axios.post('https://usergrid-71604-default-rtdb.firebaseio.com/users.json', values)
+        values = {
+            id: Math.floor(Math.random() * 1000),
+            ...values,
+        };
+        axios.post('http://localhost:8000/users', values)
         .then((response) => {
-            console.log(response.data);
-            messageApi.open({key, type: 'success', content: 'کاربر با موفقیت ثبت شد', duration: 2});
+            setTimeout(()=>{messageApi.open({key, type: 'success', content: 'کاربر با موفقیت ثبت شد', duration: 2});},500);
         })
         .catch((err) => {
-            console.log(err);
-            messageApi.open({key, type: 'error', content: 'خطا رخ داد', duration: 2});
+            setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطا رخ داد', duration: 2});},500);
         });
         
         // userContext.addUser(values);
