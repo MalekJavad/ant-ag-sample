@@ -55,6 +55,10 @@ const AddForm = () => {
                         required: true,
                         message: 'لطفا نام خود را وارد کنید',
                         },
+                        {
+                            whitespace: true,
+                            message: 'مقدار وارد شده معتبر نمی باشد'
+                        }
                     ]}
                 >
                     <Input />
@@ -68,6 +72,10 @@ const AddForm = () => {
                         required: true,
                         message: 'لطفا نام خانوادگی خود را وارد کنید',
                         },
+                        {
+                            whitespace: true,
+                            message: 'مقدار وارد شده معتبر نمی باشد'
+                        }
                     ]}
                 >
                     <Input />
@@ -81,6 +89,10 @@ const AddForm = () => {
                         required: true,
                         message: 'لطفا کد ملی خود را وارد کنید',
                         },
+                        {
+                            whitespace: true,
+                            message: 'مقدار وارد شده معتبر نمی باشد'
+                        }
                     ]}
                 >
                     <Input />
@@ -94,13 +106,21 @@ const AddForm = () => {
                         required: true,
                         message: 'لطفا شماره موبایل خود را وارد کنید',
                         },
+                        {
+                            whitespace: true,
+                            message: 'مقدار وارد شده معتبر نمی باشد'
+                        },
+                        {
+                            len: 11,
+                            message: 'تعداد کاراکتر باید 11 رقم باشد'
+                        },
                     ]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    style={{display: 'flex', justifyContent: 'start', marginRight: '19%'}} 
+                    style={{}} 
                     label="سن"
                     name="age"
                     rules={[
@@ -110,23 +130,22 @@ const AddForm = () => {
                         },
                     ]}
                 >
-                    <InputNumber min={1} max={90} />
+                    <InputNumber min={1} max={99} style={{display: 'flex'}} />
                 </Form.Item>
 
                 <Form.Item
                     style={{
                         display: 'flex',
-                        flexDirection: 'row-reverse',
+                        flexDirection: 'column',
                         justifyContent: 'start',
                         textAlign: 'center',
-                        marginRight: '13%',
                     }}
                     label="جنسیت"
                     name="gender"
                     rules={[
                         {
                             required: true,
-                            message: 'لطفا جنسبت خود را انتخاب کنید'
+                            message: 'لطفا جنسیت را انتخاب کنید'
                         }
                     ]}
                 >
@@ -142,7 +161,7 @@ const AddForm = () => {
                         span: 16,
                     }}
                 >
-                    <Button style={{width: '100%'}} type="primary" htmlType="submit">
+                    <Button style={{width: '100%', marginTop: '2rem'}} type="primary" htmlType="submit">
                         افزودن
                     </Button>
                 </Form.Item>
