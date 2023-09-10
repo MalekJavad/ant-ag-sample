@@ -158,12 +158,17 @@ const AddForm = () => {
                 </Form.Item>
 
                 <Form.Item
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
                     wrapperCol={{
-                        offset: 8,
+                        offset: 0,
                         span: 16,
                     }}
                 >
-                    <Button style={{width: '100%', marginTop: '2rem'}} type="primary" htmlType="submit">
+                    <Button style={{width: '20rem', marginTop: '2rem'}} type="primary" htmlType="submit">
                         افزودن
                     </Button>
                 </Form.Item>
