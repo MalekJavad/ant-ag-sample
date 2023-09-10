@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { message, Button, Modal, Space } from 'antd';
+import { message, Button, Modal } from 'antd';
 
 import axios from 'axios';
 
@@ -15,20 +15,6 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 const { confirm } = Modal;
 
-const showPromiseConfirm = () => {
-    confirm({
-      title: 'آیا از حذف کردن این رکورد اطمینان دارید؟',
-      icon: <ExclamationCircleFilled />,
-    //   content: 'When clicked the OK button, this dialog will be closed after 1 second',
-      onOk() {
-        return new Promise((resolve, reject) => {
-          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log('Oops errors!'));
-      },
-      onCancel() {},
-    });
-  };
-
 const UserGrid = () => {
     // const userContext = useContext(UserContext);
     const [reload, setReload] = useState(false);
@@ -41,25 +27,31 @@ const UserGrid = () => {
             confirm({
                 title: 'آیا از حذف کردن این رکورد اطمینان دارید؟',
                 icon: <ExclamationCircleFilled />,
-
+                content: `کاربر ${p.data.id} با نام ${p.data.name} ${p.data.surname} و کد ملی ${p.data.code}`,
+                style: {fontFamily: 'Vazir-FD',},
+                cancelText: 'خیر',
+                okText: 'بله',
                 onOk() {
-                    axios.delete(`http://localhost:8000/users/${p.data.id}`)
-                    .then((response) => {
-                        messageApi.open({key, type: 'success', content: 'رکورد با موفقیت حذف شد', duration: 2});
-                        setTimeout(()=> setReload(true), 500);
-                    })
-                    .catch((err) => {
-                        setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در حذف رکورد رخ داد', duration: 2});}, 500);
-                    });
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            axios.delete(`http://localhost:8000/users/${p.data.id}`)
+                            .then((response) => {
+                                messageApi.open({key, type: 'success', content: 'رکورد با موفقیت حذف شد', duration: 2});
+                                setTimeout(()=> setReload(true), 700);
+                                resolve();
+                            })
+                            .catch((err) => {
+                                setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در حذف رکورد رخ داد', duration: 2}); resolve();}, 500);
+                            });
+                          }, 1000)
+                        }, 700)
                 },
-
                 onCancel() {}
             })
         }
     
         return (
             <>
-                {/* <Button danger htmlType="button" onClick={deleteAction} size=''>حذف رکورد</Button> */}
                 <Button danger onClick={deleteAction}>حذف رکورد</Button>
             </>
         )
@@ -98,8 +90,10 @@ const UserGrid = () => {
                     dataList.push(dataObject[key]);
                 }
             }
-            setTimeout(()=>{ messageApi.open({key, type: 'success', content: 'بارگزاری شد', duration: 2});}, 500)
-            setRowData(dataList);
+            setTimeout(()=>{
+                messageApi.open({key, type: 'success', content: 'بارگزاری شد', duration: 2});
+                setRowData(dataList);
+            }, 500)   
         })
         .catch((err) => {
             setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در بارگزاری اطلاعات رخ داد', duration: 2});}, 500)
