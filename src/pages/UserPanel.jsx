@@ -33,22 +33,22 @@ const UserPanel = () => {
             style={{display: 'flex', justifyContent: 'space-between', marginRight: '20rem'}}
         >
             <Col span={8}>
-            <div className="space-align-container">
-                <div className="space-align-block">
-                    <Space
-                    className="container"
-                    >
-                        <Menu className="menu" onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
-                        <div className="panel">
-                            {
-                                current==='add' ? <AddForm />
-                                :
-                                <UserGrid />
-                            }
-                        </div>
-                    </Space>
+                <div className="space-align-container">
+                    <div className="space-align-block">
+                        <Space
+                        className="container"
+                        >
+                            <Menu className="menu" onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
+                            <div className="panel">
+                                {
+                                    current === 'add' ? <AddForm />
+                                    :
+                                    <UserGrid />
+                                }
+                            </div>
+                        </Space>
+                    </div>
                 </div>
-            </div>
             </Col>
         </Row>
     );

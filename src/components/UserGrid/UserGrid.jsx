@@ -23,7 +23,6 @@ const UserGrid = () => {
 
     const actionCellRenderer = p => {
         const deleteAction = () => {
-            // messageApi.open({key, type: 'loading', content: 'در حال حذف رکورد...'});
             confirm({
                 title: 'آیا از حذف کردن این رکورد اطمینان دارید؟',
                 icon: <ExclamationCircleFilled />,
@@ -37,14 +36,17 @@ const UserGrid = () => {
                             axios.delete(`http://localhost:8000/users/${p.data.id}`)
                             .then((response) => {
                                 messageApi.open({key, type: 'success', content: 'رکورد با موفقیت حذف شد', duration: 2});
-                                setTimeout(()=> setReload(true), 700);
+                                setTimeout(() => setReload(true), 700);
                                 resolve();
                             })
                             .catch((err) => {
-                                setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در حذف رکورد رخ داد', duration: 2}); resolve();}, 500);
+                                setTimeout(() => {
+                                    messageApi.open({key, type: 'error', content: 'خطایی در حذف رکورد رخ داد', duration: 2});
+                                    resolve();
+                                }, 500);
                             });
                           }, 1000)
-                        }, 700)
+                    }, 700)
                 },
                 onCancel() {}
             })
@@ -65,7 +67,7 @@ const UserGrid = () => {
         {field: 'phone', sortable: true, headerName: 'شماره موبایل', width: 150},
         {field: 'age', sortable: true, headerName: 'سن', width: 80},
         {field: 'gender', sortable: true, headerName: 'جنسیت', width: 100},
-        {field: 'action', headerName: 'عملیات', cellRenderer: actionCellRenderer, width: 130}
+        {field: 'action', headerName: 'عملیات', cellRenderer: actionCellRenderer, width: 130},
     ]);
 
     const [rowData, setRowData] = useState([]);
@@ -90,17 +92,17 @@ const UserGrid = () => {
                     dataList.push(dataObject[key]);
                 }
             }
-            setTimeout(()=>{
+            setTimeout(() => {
                 messageApi.open({key, type: 'success', content: 'بارگزاری شد', duration: 2});
                 setRowData(dataList);
-            }, 500)   
+            }, 500);
         })
         .catch((err) => {
-            setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در بارگزاری اطلاعات رخ داد', duration: 2});}, 500)
+            setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطایی در بارگزاری اطلاعات رخ داد', duration: 2});}, 500);
         });
         setReload(false);
         // setRowData(userContext.users);
-    }, [messageApi, reload])
+    }, [messageApi, reload]);
 
     return (
         <div className="ag-theme-alpine"
@@ -109,7 +111,6 @@ const UserGrid = () => {
                 height: '30rem', 
                 width: '70rem', 
                 textAlign: 'left', 
-                fontFamily: 'Vazir-FD',
             }}
         >
             {contextHolder}

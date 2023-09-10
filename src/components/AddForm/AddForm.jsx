@@ -19,17 +19,17 @@ const AddForm = () => {
         };
         axios.post('http://localhost:8000/users', values)
         .then((response) => {
-            setTimeout(()=>{messageApi.open({key, type: 'success', content: 'کاربر با موفقیت ثبت شد', duration: 2});},500);
+            setTimeout(() => { messageApi.open({key, type: 'success', content: 'کاربر با موفقیت ثبت شد', duration: 2}); }, 500);
         })
         .catch((err) => {
-            setTimeout(()=>{messageApi.open({key, type: 'error', content: 'خطا رخ داد', duration: 2});},500);
+            setTimeout(() => { messageApi.open({key, type: 'error', content: 'خطا رخ داد', duration: 2}); }, 500);
         });
         
         // userContext.addUser(values);
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        messageApi.open({key, type: 'error', content: 'لطفا خطا های فیلد ها را اصلاح کنید', duration: 3});
     };
 
     return (
@@ -123,7 +123,6 @@ const AddForm = () => {
                 </Form.Item>
 
                 <Form.Item
-                    style={{}} 
                     label="سن"
                     name="age"
                     rules={[
