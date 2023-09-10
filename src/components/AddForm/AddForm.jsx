@@ -91,7 +91,11 @@ const AddForm = () => {
                         {
                             whitespace: true,
                             message: 'مقدار وارد شده معتبر نمی باشد'
-                        }
+                        },
+                        {
+                            len: 10,
+                            message: 'تعداد کاراکتر باید 10 رقم باشد'
+                        },
                     ]}
                 >
                     <Input />
