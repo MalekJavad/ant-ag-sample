@@ -3,7 +3,8 @@ the API service of this project is provided with Json-server package. you need t
 
 ## Available Scripts
 
-### `yarn start`
+### `yarn install`
+
 first of All, install the dependencies using `install` command.
 
 and then In the project directory, you can run:
