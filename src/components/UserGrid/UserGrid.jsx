@@ -77,6 +77,7 @@ const UserGrid = () => {
           sortable: true,
           filter: true,
           resizable: true,
+          editable: true
         };
       }, []);
 
