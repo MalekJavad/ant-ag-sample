@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import "./UserPanel.css";
 
@@ -10,9 +10,9 @@ import UserGrid from "../components/UserGrid/UserGrid";
 
 const items = [
     {
-      label: 'افزودن کاربر',
-      key: 'add',
-      icon: <UserAddOutlined />,
+        label: 'افزودن کاربر',
+        key: 'add',
+        icon: <UserAddOutlined />,
     },
     {
         label: 'لیست کاربران',
@@ -28,22 +28,22 @@ const UserPanel = () => {
         setCurrent(e.key);
     };
 
-    return (    
+    return (
         <Row justify="space-around" align="middle"
-            style={{display: 'flex', justifyContent: 'space-between', marginRight: '20rem'}}
+            style={{ display: 'flex', justifyContent: 'space-between', marginRight: '10rem' }}
         >
             <Col span={8}>
                 <div className="space-align-container">
                     <div className="space-align-block">
                         <Space
-                        className="container"
+                            className="container"
                         >
                             <Menu className="menu" onClick={tabClick} selectedKeys={[current]} mode="horizontal" items={items} />
                             <div className="panel">
                                 {
                                     current === 'add' ? <AddForm />
-                                    :
-                                    <UserGrid />
+                                        :
+                                        <UserGrid />
                                 }
                             </div>
                         </Space>
