@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { message, Button, Modal } from 'antd';
+import { message, Button, Modal, Row } from 'antd';
 
 import axios from 'axios';
 
@@ -21,53 +21,14 @@ const UserGrid = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const key = "addUser";
 
-    const actionCellRenderer = p => {
-        const deleteAction = () => {
-            confirm({
-                title: 'آیا از حذف کردن این رکورد اطمینان دارید؟',
-                icon: <ExclamationCircleFilled />,
-                content: `کاربر ${p.data.id} با نام ${p.data.name} ${p.data.surname} و کد ملی ${p.data.code}`,
-                style: { fontFamily: 'Vazir-FD', },
-                cancelText: 'خیر',
-                okText: 'بله',
-                onOk() {
-                    return new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            axios.delete(`http://localhost:8000/users/${p.data.id}`)
-                                .then((response) => {
-                                    messageApi.open({ key, type: 'success', content: 'رکورد با موفقیت حذف شد', duration: 2 });
-                                    setTimeout(() => setReload(true), 700);
-                                    resolve();
-                                })
-                                .catch((err) => {
-                                    setTimeout(() => {
-                                        messageApi.open({ key, type: 'error', content: 'خطایی در حذف رکورد رخ داد', duration: 2 });
-                                        resolve();
-                                    }, 500);
-                                });
-                        }, 1000)
-                    }, 700)
-                },
-                onCancel() { }
-            })
-        }
-
-        return (
-            <>
-                <Button danger onClick={deleteAction}>حذف رکورد</Button>
-            </>
-        )
-    }
-
     const [columnDef] = useState([
-        { field: 'id', sortable: true, headerName: 'شناسه', width: 90 },
+        { field: 'id', sortable: true, headerName: 'شناسه', width: 120, checkboxSelection: true, },
         { field: 'name', sortable: true, headerName: 'نام', editable: true },
         { field: 'surname', sortable: true, headerName: 'نام خانوادگی', editable: true },
-        { field: 'code', sortable: true, headerName: 'کد ملی', width: 150, editable: true },
-        { field: 'phone', sortable: true, headerName: 'شماره موبایل', width: 150, editable: true },
-        { field: 'age', sortable: true, headerName: 'سن', width: 80, editable: true },
-        { field: 'gender', sortable: true, headerName: 'جنسیت', width: 100, editable: true },
-        { field: 'action', headerName: 'عملیات', cellRenderer: actionCellRenderer, width: 130 },
+        { field: 'code', sortable: true, headerName: 'کد ملی', width: 180, editable: true },
+        { field: 'phone', sortable: true, headerName: 'شماره موبایل', width: 180, editable: true },
+        { field: 'age', sortable: true, headerName: 'سن', width: 115, editable: true },
+        { field: 'gender', sortable: true, headerName: 'جنسیت', width: 115, editable: true },
     ]);
 
     const [rowData, setRowData] = useState([]);
@@ -76,7 +37,7 @@ const UserGrid = () => {
         return {
             sortable: true,
             filter: true,
-            resizable: true
+            resizable: true,
         };
     }, []);
 
@@ -121,26 +82,82 @@ const UserGrid = () => {
         // setRowData(userContext.users);
     }, [messageApi, reload]);
 
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    const onRowSelected = useCallback((event) => {
+        const rows = event.api.getSelectedRows();
+        setSelectedRows(rows);
+    }, []);
+
+    const groupDeleteHandler = () => {
+        if (selectedRows.length === 0) {
+            return;
+        }
+        confirm({
+            title: 'آیا از حذف کردن این رکوردها اطمینان دارید؟',
+            icon: <ExclamationCircleFilled />,
+            style: { fontFamily: 'Vazir-FD', },
+            cancelText: 'خیر',
+            okText: 'بله',
+            onOk() {
+                return new Promise((resolve, reject) => {
+                    selectedRows.map((row) => {
+                        return (
+                            setTimeout(() => {
+                                axios.delete(`http://localhost:8000/users/${row.id}`)
+                                    .then((response) => {
+                                        messageApi.open({ key, type: 'success', content: 'رکوردها با موفقیت حذف شدند', duration: 2 });
+                                        resolve();
+                                        setReload(true);
+                                    })
+                                    .catch((err) => {
+                                        setTimeout(() => {
+                                            messageApi.open({ key, type: 'error', content: 'خطایی در حذف رکوردها رخ داد', duration: 2 });
+                                            resolve();
+                                        }, 500);
+                                    })
+                            }, 10)
+                        )
+                    });
+                    setSelectedRows([]);
+                })
+            },
+            onCancel() { }
+        })
+    }
+
     return (
-        <div className="ag-theme-alpine"
-            style={
-                {
-                    height: '30rem',
-                    width: '70rem',
-                    textAlign: 'left',
-                }}
-        >
-            {contextHolder}
-            <AgGridReact
-                enableRtl={true}
-                rowData={rowData}
-                columnDefs={columnDef}
-                defaultColDef={defaultColDef}
-                animateRows={true}
-                animateColumn={true}
-                onCellValueChanged={onCellValueChanged}
-            />
-        </div>
+        <>
+            <Row style={{ margin: '1rem' }}>
+                {selectedRows.length === 0 ?
+                    <Button danger disabled>حذف رکوردها</Button>
+                    :
+                    <Button danger onClick={groupDeleteHandler}>حذف رکوردها</Button>
+                }
+
+            </Row>
+            <div className="ag-theme-alpine"
+                style={
+                    {
+                        height: '30rem',
+                        width: '70rem',
+                        textAlign: 'left',
+                    }}
+            >
+                {contextHolder}
+                <AgGridReact
+                    enableRtl={true}
+                    rowData={rowData}
+                    columnDefs={columnDef}
+                    defaultColDef={defaultColDef}
+                    animateRows={true}
+                    animateColumn={true}
+                    onCellValueChanged={onCellValueChanged}
+                    rowSelection={'multiple'}
+                    onRowSelected={onRowSelected}
+                />
+            </div>
+        </>
     );
 };
 
